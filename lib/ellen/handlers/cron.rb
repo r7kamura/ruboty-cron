@@ -3,7 +3,7 @@ module Ellen
     class Cron < Base
       on(/add job "(.+)" (.+)/, name: "add", description: "Add a new cron job")
 
-      on(/delete job (\d+)/, name: "delete", description: "Delete a cron job by its id")
+      on(/delete job (\d+)/, name: "delete", description: "Delete a cron job")
 
       on(/list jobs\z/, name: "list", description: "List all cron jobs")
 
