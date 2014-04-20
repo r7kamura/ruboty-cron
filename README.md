@@ -9,3 +9,5 @@ You can use any [Chrono](https://github.com/r7kamura/chrono/) compatible cron sy
 @ellen delete job <id>                   - Delete a cron job
 @ellen list jobs                         - List all cron jobs
 ```
+
+![](https://raw.githubusercontent.com/r7kamura/ellen-cron/master/images/screenshot.png)
