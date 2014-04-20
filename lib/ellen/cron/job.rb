@@ -1,10 +1,11 @@
 require "active_support/core_ext/hash/keys"
+require "chrono"
 require "json"
 
 module Ellen
   module Cron
     class Job
-      attr_reader :attributes
+      attr_reader :attributes, :thread
 
       def initialize(attributes)
         @attributes = attributes.stringify_keys
@@ -14,14 +15,16 @@ module Ellen
         to_hash.to_json
       end
 
-      # TODO
-      def start
-        puts "start #{self}"
+      def start(robot)
+        @thread = Thread.new do
+          Chrono::Trigger.new(schedule) do
+            robot.say(body)
+          end.run
+        end
       end
 
-      # TODO
       def stop
-        puts "stop #{self}"
+        thread.kill
       end
 
       def description

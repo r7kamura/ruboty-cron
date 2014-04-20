@@ -53,7 +53,7 @@ module Ellen
         job = Ellen::Cron::Job.new(id: generate_id, schedule: message[1], body: message[2])
         jobs[job.id] = job
         push
-        job.start
+        job.start(robot)
         job
       end
 
