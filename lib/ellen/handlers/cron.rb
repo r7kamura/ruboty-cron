@@ -1,6 +1,8 @@
 module Ellen
   module Handlers
     class Cron < Base
+      NAMESPACE = "cron"
+
       on(/add job "(.+)" (.+)/, name: "add", description: "Add a new cron job")
 
       on(/delete job (\d+)/, name: "delete", description: "Delete a cron job")
@@ -11,7 +13,7 @@ module Ellen
 
       def add(message)
         job = create(message)
-        robot.say "Job #{job.id} created"
+        robot.say("Job #{job.id} created")
       end
 
       def delete(message)
@@ -19,50 +21,45 @@ module Ellen
         if jobs.has_key?(id)
           jobs[id].stop
           jobs.delete(id)
-          push
-          robot.say "Job #{id} deleted"
+          robot.say("Job #{id} deleted")
         else
-          robot.say "Job #{id} does not exist"
+          robot.say("Job #{id} does not exist")
         end
       end
 
       def list(message)
-        robot.say jobs_list
+        robot.say(summary)
       end
 
       private
 
-      def pull
-        self.jobs = robot.brain.data["cron"].inject({}) do |result, (id, attributes)|
-          result.merge(id => Ellen::Cron::Job.new(attributes))
-        end
-      end
-
-      def push
-        robot.brain.data["cron"] = jobs.inject({}) do |result, (id, job)|
-          result.merge(id => job.to_json)
-        end
-        robot.brain.save
-      end
-
       def jobs
-        @jobs ||= {}
+        robot.brain.data[NAMESPACE] ||= {}
       end
 
       def create(message)
         job = Ellen::Cron::Job.new(id: generate_id, schedule: message[1], body: message[2])
-        jobs[job.id] = job
-        push
+        jobs[job.id] = job.to_hash
         job.start(robot)
         job
       end
 
-      def jobs_list
+      def summary
         if jobs.empty?
-          "Jobs not found"
+          empty_message
         else
-          jobs.values.map(&:description).join("\n")
+          job_descriptions
         end
+      end
+
+      def empty_message
+        "Job not found"
+      end
+
+      def job_descriptions
+        jobs.values.map do |attributes|
+          Ellen::Cron::Job.new(attributes).description
+        end.join("\n")
       end
 
       def generate_id

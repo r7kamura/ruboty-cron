@@ -11,16 +11,16 @@ module Ellen
         @attributes = attributes.stringify_keys
       end
 
-      def to_json
-        to_hash.to_json
-      end
-
       def start(robot)
         @thread = Thread.new do
           Chrono::Trigger.new(schedule) do
             robot.say(body)
           end.run
         end
+      end
+
+      def to_hash
+        attributes
       end
 
       def stop
@@ -41,12 +41,6 @@ module Ellen
 
       def body
         attributes["body"]
-      end
-
-      private
-
-      def to_hash
-        attributes.to_json
       end
     end
   end
