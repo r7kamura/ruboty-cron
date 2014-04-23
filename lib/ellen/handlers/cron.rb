@@ -11,6 +11,11 @@ module Ellen
 
       attr_writer :jobs
 
+      def initialize(*args)
+        super
+        remember
+      end
+
       def add(message)
         job = create(message)
         robot.say("Job #{job.id} created")
@@ -19,8 +24,9 @@ module Ellen
       def delete(message)
         id = message[1].to_i
         if jobs.has_key?(id)
-          jobs[id].stop
           jobs.delete(id)
+          running_jobs[id].stop
+          running_jobs.delete(id)
           robot.say("Job #{id} deleted")
         else
           robot.say("Job #{id} does not exist")
@@ -33,6 +39,14 @@ module Ellen
 
       private
 
+      def remember
+        jobs.each do |id, attributes|
+          job = Ellen::Cron::Job.new(attributes)
+          running_jobs[id] = job
+          job.start(robot)
+        end
+      end
+
       def jobs
         robot.brain.data[NAMESPACE] ||= {}
       end
@@ -41,6 +55,7 @@ module Ellen
         job = Ellen::Cron::Job.new(id: generate_id, schedule: message[1], body: message[2])
         jobs[job.id] = job.to_hash
         job.start(robot)
+        running_jobs[job.id] = job
         job
       end
 
@@ -67,6 +82,10 @@ module Ellen
           id = rand(10000)
           break id unless jobs.has_key?(id)
         end
+      end
+
+      def running_jobs
+        @running_jobs ||= {}
       end
     end
   end
