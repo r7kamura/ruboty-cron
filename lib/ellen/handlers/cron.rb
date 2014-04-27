@@ -3,9 +3,9 @@ module Ellen
     class Cron < Base
       NAMESPACE = "cron"
 
-      on(/add job "(.+)" (.+)/, name: "add", description: "Add a new cron job")
+      on(/add job "(?<schedule>.+)" (?<body>.+)/, name: "add", description: "Add a new cron job")
 
-      on(/delete job (\d+)/, name: "delete", description: "Delete a cron job")
+      on(/delete job (?<id>\d+)/, name: "delete", description: "Delete a cron job")
 
       on(/list jobs\z/, name: "list", description: "List all cron jobs")
 
@@ -18,23 +18,23 @@ module Ellen
 
       def add(message)
         job = create(message)
-        robot.say("Job #{job.id} created")
+        message.reply("Job #{job.id} created")
       end
 
       def delete(message)
-        id = message[1].to_i
+        id = message[:id].to_i
         if jobs.has_key?(id)
           jobs.delete(id)
           running_jobs[id].stop
           running_jobs.delete(id)
-          robot.say("Job #{id} deleted")
+          message.reply("Job #{id} deleted")
         else
-          robot.say("Job #{id} does not exist")
+          message.reply("Job #{id} does not exist")
         end
       end
 
       def list(message)
-        robot.say(summary)
+        message.reply(summary)
       end
 
       private
@@ -52,7 +52,7 @@ module Ellen
       end
 
       def create(message)
-        job = Ellen::Cron::Job.new(id: generate_id, schedule: message[1], body: message[2])
+        job = Ellen::Cron::Job.new(id: generate_id, schedule: message[:schedule], body: message[:body])
         jobs[job.id] = job.to_hash
         job.start(robot)
         running_jobs[job.id] = job
