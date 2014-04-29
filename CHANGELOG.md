@@ -1,3 +1,6 @@
+## 0.0.5
+* Says where job is registered on
+
 ## 0.0.4
 * Support Ellen v0.2.0
 
