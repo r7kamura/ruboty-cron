@@ -14,7 +14,7 @@ module Ellen
       def start(robot)
         @thread = Thread.new do
           Chrono::Trigger.new(schedule) do
-            robot.say(body)
+            Message.new(from: from, robot: robot, to: to).reply(body)
           end.run
         end
       end
@@ -41,6 +41,14 @@ module Ellen
 
       def body
         attributes["body"]
+      end
+
+      def from
+        attributes["from"]
+      end
+
+      def to
+        attributes["to"]
       end
     end
   end

@@ -52,7 +52,13 @@ module Ellen
       end
 
       def create(message)
-        job = Ellen::Cron::Job.new(id: generate_id, schedule: message[:schedule], body: message[:body])
+        job = Ellen::Cron::Job.new(
+          id: generate_id,
+          schedule: message[:schedule],
+          body: message[:body],
+          from: message.from,
+          to: message.to,
+        )
         jobs[job.id] = job.to_hash
         job.start(robot)
         running_jobs[job.id] = job
