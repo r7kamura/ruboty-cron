@@ -1,3 +1,5 @@
+require "active_support/core_ext/hash/slice"
+
 module Ellen
   module Handlers
     class Cron < Base
@@ -53,11 +55,11 @@ module Ellen
 
       def create(message)
         job = Ellen::Cron::Job.new(
-          id: generate_id,
-          schedule: message[:schedule],
-          body: message[:body],
-          from: message.from,
-          to: message.to,
+          message.original.except(:robot).merge(
+            body: message[:body],
+            id: generate_id,
+            schedule: message[:schedule],
+          ),
         )
         jobs[job.id] = job.to_hash
         job.start(robot)

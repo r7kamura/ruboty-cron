@@ -1,4 +1,5 @@
 require "active_support/core_ext/hash/keys"
+require "active_support/core_ext/hash/slice"
 require "chrono"
 require "json"
 
@@ -14,7 +15,9 @@ module Ellen
       def start(robot)
         @thread = Thread.new do
           Chrono::Trigger.new(schedule) do
-            Message.new(from: from, robot: robot, to: to).reply(body)
+            Message.new(
+              attributes.symbolize_keys.except(:body, :id, :schedule).merge(robot: robot)
+            ).reply(body)
           end.run
         end
       end
