@@ -36,7 +36,7 @@ module Ellen
       end
 
       def list(message)
-        message.reply(summary)
+        message.reply(summary, code: true)
       end
 
       private
