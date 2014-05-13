@@ -1,3 +1,6 @@
+## 0.0.6
+* Store & Rebuild all message attributes
+
 ## 0.0.5
 * Says where job is registered on
 
