@@ -1,3 +1,6 @@
+## 0.0.7
+* Format message if adapter supports :code option
+
 ## 0.0.6
 * Store & Rebuild all message attributes
 
