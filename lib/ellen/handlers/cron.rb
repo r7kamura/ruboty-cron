@@ -1,5 +1,3 @@
-require "active_support/core_ext/hash/slice"
-
 module Ellen
   module Handlers
     class Cron < Base

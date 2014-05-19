@@ -1,8 +1,3 @@
-require "active_support/core_ext/hash/keys"
-require "active_support/core_ext/hash/slice"
-require "chrono"
-require "json"
-
 module Ellen
   module Cron
     class Job
