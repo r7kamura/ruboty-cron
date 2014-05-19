@@ -1,3 +1,6 @@
+## 0.0.8
+* Fix loaded modules
+
 ## 0.0.7
 * Format message if adapter supports :code option
 
