@@ -1,4 +1,4 @@
-module Ellen
+module Ruboty
   module Cron
     class Job
       attr_reader :attributes, :thread

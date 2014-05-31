@@ -11,7 +11,7 @@
 * Says where job is registered on
 
 ## 0.0.4
-* Support Ellen v0.2.0
+* Support Ruboty v0.2.0
 
 ## 0.0.3
 * Remember registered jobs after initialized

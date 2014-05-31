@@ -1,4 +1,4 @@
-module Ellen
+module Ruboty
   module Handlers
     class Cron < Base
       NAMESPACE = "cron"
@@ -41,7 +41,7 @@ module Ellen
 
       def remember
         jobs.each do |id, attributes|
-          job = Ellen::Cron::Job.new(attributes)
+          job = Ruboty::Cron::Job.new(attributes)
           running_jobs[id] = job
           job.start(robot)
         end
@@ -52,7 +52,7 @@ module Ellen
       end
 
       def create(message)
-        job = Ellen::Cron::Job.new(
+        job = Ruboty::Cron::Job.new(
           message.original.except(:robot).merge(
             body: message[:body],
             id: generate_id,
@@ -79,7 +79,7 @@ module Ellen
 
       def job_descriptions
         jobs.values.map do |attributes|
-          Ellen::Cron::Job.new(attributes).description
+          Ruboty::Cron::Job.new(attributes).description
         end.join("\n")
       end
 
