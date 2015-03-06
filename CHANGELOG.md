@@ -1,27 +1,30 @@
+## 1.0.0
+- Chnage job behavior to receive body as message in scheduled time
+
 ## 0.0.9
-* Rename: Ellen -> Ruboty
+- Rename: Ellen -> Ruboty
 
 ## 0.0.8
-* Fix loaded modules
+- Fix loaded modules
 
 ## 0.0.7
-* Format message if adapter supports :code option
+- Format message if adapter supports :code option
 
 ## 0.0.6
-* Store & Rebuild all message attributes
+- Store & Rebuild all message attributes
 
 ## 0.0.5
-* Says where job is registered on
+- Says where job is registered on
 
 ## 0.0.4
-* Support Ruboty v0.2.0
+- Support Ruboty v0.2.0
 
 ## 0.0.3
-* Remember registered jobs after initialized
-* Stop running job before its deletion
+- Remember registered jobs after initialized
+- Stop running job before its deletion
 
 ## 0.0.2
-* Support the new Brain interface
+- Support the new Brain interface
 
 ## 0.0.1
-* 1st Release
+- 1st Release
