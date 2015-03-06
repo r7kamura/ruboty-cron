@@ -10,9 +10,12 @@ module Ruboty
       def start(robot)
         @thread = Thread.new do
           Chrono::Trigger.new(schedule) do
-            Message.new(
-              attributes.symbolize_keys.except(:body, :id, :schedule).merge(robot: robot)
-            ).reply(body)
+            robot.receive(
+              attributes.symbolize_keys.except(
+                :id,
+                :schedule,
+              ),
+            )
           end.run
         end
       end
@@ -39,14 +42,6 @@ module Ruboty
 
       def body
         attributes["body"]
-      end
-
-      def from
-        attributes["from"]
-      end
-
-      def to
-        attributes["to"]
       end
     end
   end
