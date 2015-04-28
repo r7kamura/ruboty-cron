@@ -1,3 +1,6 @@
+## 1.0.1
+- Fix greedy match
+
 ## 1.0.0
 - Chnage job behavior to receive body as message in scheduled time
 
