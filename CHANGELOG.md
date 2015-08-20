@@ -1,3 +1,6 @@
+## 1.0.2
+- Support multi lines message (#4)
+
 ## 1.0.1
 - Fix greedy match
 
