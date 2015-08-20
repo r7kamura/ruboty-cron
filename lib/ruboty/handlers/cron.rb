@@ -3,7 +3,7 @@ module Ruboty
     class Cron < Base
       NAMESPACE = "cron"
 
-      on(/add job "(?<schedule>.+?)" (?<body>.+)/, name: "add", description: "Add a new cron job")
+      on(/add job "(?<schedule>.+?)" (?<body>.+)/m, name: "add", description: "Add a new cron job")
 
       on(/delete job (?<id>\d+)/, name: "delete", description: "Delete a cron job")
 
