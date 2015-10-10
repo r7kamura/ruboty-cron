@@ -28,8 +28,18 @@ module Ruboty
         thread.kill
       end
 
+      def suspend
+        stop
+        attributes["suspended"] = true
+      end
+
+      def resume(robot)
+        start(robot)
+        attributes.delete("suspended") if attributes.has_key?("suspended")
+      end
+
       def description
-        %<%5s: "%s" %s> % [id, schedule, body]
+        %<%5s: (%s) "%s" %s> % [id, suspended? ? "suspend" : "active", schedule, body]
       end
 
       def id
@@ -42,6 +52,10 @@ module Ruboty
 
       def body
         attributes["body"]
+      end
+
+      def suspended?
+        !!attributes["suspended"]
       end
     end
   end
