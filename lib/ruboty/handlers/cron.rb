@@ -50,7 +50,7 @@ module Ruboty
             running_jobs.delete(id)
             message.reply("Job #{id} suspended")
           else
-            message.reply("job #{id} had suspended")
+            message.reply("Job #{id} had suspended")
           end
         else
           message.reply("Job #{id} does not exist")
@@ -67,7 +67,7 @@ module Ruboty
             running_jobs[id] = job
             message.reply("Job #{id} resumed")
           else
-            message.reply("job #{id} is running")
+            message.reply("Job #{id} is running")
           end
         else
           message.reply("Job #{id} does not exist")
