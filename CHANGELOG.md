@@ -1,3 +1,6 @@
+## 1.1.0
+- Add suspend/resume features (#5)
+
 ## 1.0.2
 - Support multi lines message (#4)
 
