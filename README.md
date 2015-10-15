@@ -7,6 +7,8 @@ You can use any [Chrono](https://github.com/r7kamura/chrono/) compatible cron sy
 ```
 @ruboty add job "<cron syntax>" <message> - Add a new cron job
 @ruboty delete job <id>                   - Delete a cron job
+@ruboty suspend job <id>                  - Suspend a cron job
+@ruboty resume job <id>                   - Resume a cron job
 @ruboty list jobs                         - List all cron jobs
 ```
 

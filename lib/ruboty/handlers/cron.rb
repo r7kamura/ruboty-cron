@@ -9,6 +9,10 @@ module Ruboty
 
       on(/list jobs\z/, name: "list", description: "List all cron jobs")
 
+      on(/suspend job (?<id>\d+)/, name: "suspend", description: "Suspend a cron job")
+
+      on(/resume job (?<id>\d+)/, name: "resume", description: "Resume a cron job")
+
       attr_writer :jobs
 
       def initialize(*args)
@@ -37,13 +41,48 @@ module Ruboty
         message.reply(summary, code: true)
       end
 
+      def suspend(message)
+        id = message[:id].to_i
+        if jobs.has_key?(id)
+          if running_jobs[id]
+            running_jobs[id].suspend
+            jobs[id] = running_jobs[id].to_hash
+            running_jobs.delete(id)
+            message.reply("Job #{id} suspended")
+          else
+            message.reply("Job #{id} had suspended")
+          end
+        else
+          message.reply("Job #{id} does not exist")
+        end
+      end
+
+      def resume(message)
+        id = message[:id].to_i
+        if jobs.has_key?(id)
+          job = Ruboty::Cron::Job.new(jobs[id])
+          if job.suspended?
+            job.resume(robot)
+            jobs[id] = job.to_hash
+            running_jobs[id] = job
+            message.reply("Job #{id} resumed")
+          else
+            message.reply("Job #{id} is running")
+          end
+        else
+          message.reply("Job #{id} does not exist")
+        end
+      end
+
       private
 
       def remember
         jobs.each do |id, attributes|
           job = Ruboty::Cron::Job.new(attributes)
-          running_jobs[id] = job
-          job.start(robot)
+          unless job.suspended?
+            running_jobs[id] = job
+            job.start(robot)
+          end
         end
       end
 
