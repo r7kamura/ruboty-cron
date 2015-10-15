@@ -43,7 +43,7 @@ module Ruboty
 
       def suspend(message)
         id = message[:id].to_i
-        if jobs.has_key?(id) 
+        if jobs.has_key?(id)
           if running_jobs[id]
             running_jobs[id].suspend
             jobs[id] = running_jobs[id].to_hash
