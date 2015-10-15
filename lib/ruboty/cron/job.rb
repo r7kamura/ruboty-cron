@@ -39,7 +39,7 @@ module Ruboty
       end
 
       def description
-        %<%5s: (%s) "%s" %s> % [id, suspended? ? "suspend" : "active", schedule, body]
+        %<%5s: (%s) "%s" %s> % [id, suspended? ? "suspended" : "active", schedule, body]
       end
 
       def id
