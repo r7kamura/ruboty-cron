@@ -12,6 +12,8 @@ You can use any [Chrono](https://github.com/r7kamura/chrono/) compatible cron sy
 @ruboty list jobs                         - List all cron jobs
 ```
 
+The scheduled message will be delivered to your bot itself (instead of posting to somewhere by the bot directly) on the time. If the message contains any valid command, your bot will try to respond to it.
+
 ### Example
 ```
 $ bundle exec ruboty
@@ -37,3 +39,5 @@ If you want to schedule Ruboty to say something,
 ```
 > @ruboty add job "0 8 * * 1-5" @ruboty echo It's Time for School!
 ```
+
+Note that you need to include `@ruboty` before the command name `echo`, because ruboty-echo responds only for any mention to the bot itself. Otherwise your bot will ignore the message as an invalid `echo` command.
