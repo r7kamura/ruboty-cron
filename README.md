@@ -12,7 +12,7 @@ You can use any [Chrono](https://github.com/r7kamura/chrono/) compatible cron sy
 @ruboty list jobs                         - List all cron jobs
 ```
 
-The scheduled message will be delivered to your bot on the time. If the message contains any valid command, your bot will try to respond to it.
+The scheduled message will be delivered to your bot itself (instead of posting to somewhere by the bot directly) on the time. If the message contains any valid command, your bot will try to respond to it.
 
 ### Example
 ```
